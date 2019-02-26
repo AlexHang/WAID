@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<script type="text/javascript" src="PNGLib.js"></script>
+	<style>
+		html,body{
+			background-color:aliceblue;
+		}
+	</style>
+	
+</head>
+<body>
+	<canvas id="canvas" width="640" height="480"></canvas>
+	<div id="status"></div><br>
+	<div id="color" style="width:30px;height:30px;"></div>
+	<p>
+	Move the mouse over the BUS !
+	</p>
+	<button onclick="calculate_percentage()">Calculeaza procentaj</button>
+	<button onclick="drawVisionImage()">Computer Vision</button>
+
+	<input type="file" name="" id="file-input" >
+	
+	
+	<div id="draw_here" style="margin-top: -600px;">
+	
+	</div>
+</body>
+
+<script type="text/javascript">
+
+		Array.matrix = function(numrows, numcols, initial){
+		   var arr = [];
+		   for (var i = 0; i < numrows; ++i){
+			  var columns = [];
+			  for (var j = 0; j < numcols; ++j){
+				 columns[j] = initial;
+			  }
+			  arr[i] = columns;
+			}
+			return arr;
+		}
+
+
+
+		function Color(r,g,b){
+			this.red=r;
+			this.green=g;
+			this.blue=b;
+		}
+
+		function indexOfMin(arr) {
+		    if (arr.length === 0) {
+		        return -1;
+		    }
+
+		    var min = arr[0];
+		    var minIndex = 0;
+
+		    for (var i = 1; i < arr.length; i++) {
+		        if (arr[i] < min) {
+		            minIndex = i;
+		            min = arr[i];
+		        }
+		    }
+
+		    return minIndex;
+		}
+
+
+		function getColorDistance(main,sec){
+			var d=0;
+			d=(Math.pow(main.red-sec.red,2)+Math.pow(main.blue-sec.blue,2)+Math.pow(main.green-sec.green,2));
+			return d;
+		}
+
+		const red=new Color(255,0,0);
+		const realRed=new Color(165,42,42);
+		//const brown=new Color(165,42,42);
+		const blue=new Color(0,0,255);
+		const lightBlue = new Color(173,216,230);
+		const realBlue=new Color(0,0,128);
+		const green=new Color(0,255,0);
+		const realGreen=new Color(0,128,0);
+		const yellow=new Color(255,255,0);
+		const skin=new Color(197,173,157);
+		const silver=new Color(128,0,0);
+		const white=new Color(255,255,255);
+		const black=new Color(0,0,0);
+		
+		var canvas = document.getElementById("canvas");
+		var Image_Matrix =  Array.matrix(640,480,0);
+
+		function getColor(r,g,b){
+
+			var aux = new Color(r,g,b);
+			var distances = new Array(	getColorDistance(red,aux),
+										getColorDistance(blue,aux),
+										getColorDistance(green,aux),
+										getColorDistance(white,aux),
+										getColorDistance(black,aux),
+										getColorDistance(yellow,aux),
+										getColorDistance(silver,aux),
+										getColorDistance(realRed,aux),
+										getColorDistance(realGreen,aux),
+										getColorDistance(realBlue,aux),
+										getColorDistance(skin,aux),
+										getColorDistance(lightBlue,aux),
+										);
+			var minim_distance = indexOfMin(distances);
+			switch(minim_distance){
+				case 0:
+					return "red";
+					break;
+				case 1: 
+					return "blue";
+					break;
+				case 2:
+					return "green";
+					break;
+				case 3:
+					return "white";
+					break;
+				case 4:
+					return "black";
+					break;
+				case 5:
+					return "yellow";
+					break;
+				case 6:
+					return "silver";
+					break;
+				case 7:
+					return "red";
+					break;
+				case 8:
+					return "green";
+					break;
+				case 9: 
+					return "blue";
+					break;
+				case 10: 
+					return "white";
+					break;	
+				case 11: 
+					return "blue";
+					break;
+					
+					
+			}
+
+		}
+
+function getColorDraw(r,g,b){
+
+			var aux = new Color(r,g,b);
+			var distances = new Array(	getColorDistance(red,aux),
+										getColorDistance(blue,aux),
+										getColorDistance(green,aux),
+										getColorDistance(white,aux),
+										getColorDistance(yellow,aux),
+										getColorDistance(silver,aux),
+										);
+			var minim_distance = indexOfMin(distances);
+			switch(minim_distance){
+				case 0:
+					return "red";
+					break;
+				case 1: 
+					return "blue";
+					break;
+				case 2:
+					return "green";
+					break;
+				case 3:
+					return "white";
+					break;
+				case 4:
+					return "yellow";
+					break;
+				case 5:
+					return "silver";
+					break;
+			}
+
+		}
+
+
+		
+</script>
+
+<script type="text/javascript">
+	
+	
+
+function getElementPosition(obj) {
+    var curleft = 0, curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curleft += obj.offsetLeft;
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+        return { x: curleft, y: curtop };
+    }
+    return undefined;
+}
+
+function getEventLocation(element,event){
+		var pos = getElementPosition(element);
+    
+    return {
+    		x: (event.pageX - pos.x),
+      	y: (event.pageY - pos.y)
+    };
+}
+
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+    return ((r << 16) | (g << 8) | b).toString(16);
+}
+
+function drawImageFromWebUrl(sourceurl){
+      var img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.addEventListener("load", function () {
+          // The image can be drawn from any source
+          canvas.getContext("2d").drawImage(img, 0, 0, 640,480);//, 0, 0, canvas.width, canvas.height);
+          
+      });
+
+      img.setAttribute("src", sourceurl);
+}
+
+
+var input = document.getElementById('file-input');
+input.addEventListener('change', handleFiles);
+
+function handleFiles(e) {
+    
+    var img = new Image;
+    img.src = URL.createObjectURL(e.target.files[0]);
+    img.onload = function() {
+        canvas.getContext("2d").drawImage(img, 0, 0, 640,480);
+        alert('the image is drawn');
+    }
+}
+// Draw a base64 image because this is a fiddle, and if we try with an image from URL we'll get tainted canvas error
+// Read more about here : http://ourcodeworld.com/articles/read/182/the-canvas-has-been-tainted-by-cross-origin-data-and-tainted-canvases-may-not-be-exported
+drawImageFromWebUrl("https://image.shutterstock.com/image-photo/empty-table-covered-sackcloth-over-260nw-285662423.jpg");
+
+canvas.addEventListener("mousemove",function(e){
+	var eventLocation = getEventLocation(this,e);
+    var coord = "x=" + eventLocation.x + ", y=" + eventLocation.y;
+    
+    // Get the data of the pixel according to the location generate by the getEventLocation function
+    var context = this.getContext('2d');
+    var pixelData = context.getImageData(eventLocation.x, eventLocation.y, 1, 1).data; 
+
+    // If transparency on the image
+    if((pixelData[0] == 0) && (pixelData[1] == 0) && (pixelData[2] == 0) && (pixelData[3] == 0)){
+ 				coord += " (Transparent color detected, cannot be converted to HEX)";
+    }
+    
+    var hex = "#" + ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
+    
+    // Draw the color and coordinates.
+   // document.getElementById("status").innerHTML = coord +"color: "+ pixelData;
+   // document.getElementById("color").style.backgroundColor = hex;
+},false);
+
+
+function calculate_percentage(){
+	var redc=0,bluec=0,greenc=0,whitec=0,blackc=0,yellowc=0,silverc=0;
+	for(var x=0;x<640;x++){
+		for(var y=0;y<480;y++){
+			var context = canvas.getContext('2d');
+   		    var pixelData = context.getImageData(x, y, 1, 1).data;
+   		    var auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
+   		    if(auxColor == "red")
+   		    	redc++;
+   		    if(auxColor == "blue")
+   		    	bluec++;
+   		    if(auxColor == "green")
+   		    	greenc++;
+   		    if(auxColor == "white")
+   		    	whitec++;
+   		    if(auxColor == "black")
+   		    	blackc++;
+			if(auxColor == "yellow")
+				yellowc++;
+			if(auxColor == "silver")
+				silverc++;
+   		    //blue+=pixelData[1];
+   		    //green+=pixelData[1];
+		}
+	}
+	var total=redc+bluec+greenc+whitec+blackc+yellowc+silverc;
+	redc = (redc/total)*100;
+	bluec = (bluec/total)*100;
+	greenc = (greenc/total)*100;
+	whitec = (whitec/total)*100;
+	blackc = (blackc/total)*100;
+	yellowc = (yellowc/total)*100;
+	silverc = (silverc/total)*100;
+	document.getElementById("status").innerHTML = "red: " +  redc 
+													+"<br> blue: "+ bluec 
+													+ " <br> "+ "green: "+greenc
+													+ " <br> white: "+whitec 
+													+ " <br> black: "+ blackc 
+													+ " <br> yellow: "+yellowc
+													+ " <br> silver: "+silverc;
+
+	
+	
+	
+	
+}
+
+
+
+function drawVisionImage(){
+
+/* computer vision now*/
+	
+	var img_table="";
+	var context = canvas.getContext('2d');
+	var pixelData,auxColor;
+	
+	
+	console.log("line 233");
+	//for (var i = 0, num = 200 / 10; i <= num; i+=.01) {
+	for (var i = 0; i < 640; i=i+10) {
+		for (var j = 480; j > 0; j=j-10){
+		//console.log("still running"+i+" "+j);
+			
+   		    pixelData = context.getImageData(i, j, 1, 1).data;
+   		    auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
+			Image_Matrix[j][i]=auxColor;
+		//img_table+='<div style="width:1px; height:1px; float:right; background-color: rgb(255,255,255);"><div>';
+		//document.getElementById("draw_here").innerHTML+='<div style="width:10px; height:10px; float:left; background-color: rgb('+pixelData[0]+','+pixelData[1]+','+pixelData[2]+');"></div>';
+		document.getElementById("draw_here").innerHTML+='<div style="width:10px; height:10px; float:left; background-color:'+auxColor+'"></div>';
+		
+		// use a color triad of Microsofts million dollar color
+		//p.buffer[p.index(i,j)] = p.color(pixelData[0],pixelData[1],pixelData[2],250);
+		}
+		console.log(i);
+		document.getElementById("draw_here").innerHTML+="<br>";
+		//img_table+="<br>";
+		//document.getElementById("draw_here").innerHTML+="<br>";
+		//console.log("still running");
+		//console.log(img_table);
+		//document.getElementById("draw_here").innerHTML+=img_table;
+		//img_table=" ";
+		
+	}
+
+	//document.getElementById("draw_here").innerHTML=img_table;
+	console.log("done");
+	
+	
+document.getElementById("draw_here").style="transform: rotate(-90deg); margin-top:-600px;"
+}
+
+</script>
+</html>
