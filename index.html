@@ -1,413 +1,224 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  </head>
-  <body onload="init();">
-    <h1>Take a snapshot of the current video stream</h1>
-   Click on the Start WebCam button.
-     <p>
-    <button onclick="startWebcam();">Start WebCam</button>
-    <button onclick="stopWebcam();">Stop WebCam</button> 
-       <button onclick="snapshot();">Take Snapshot</button> 
-    </p>
-    <video onclick="snapshot(this);" width=640 height=480 id="video" controls autoplay></video>
-  <p>
-  
-  <p id="status"></p>
-  
-	<button onclick="calculate_percentage()">Calculeaza procentaj</button>
-	<button onclick="drawVisionImage()">Computer Vision</button>
-	<button onclick="showQuadrantColor()">showQuadrantColor</button>
-	
-	
-	
-	
-	
-	
-        Screenshots : <p>
-      <canvas  id="myCanvas" width="640" height="480" ></canvas>
-	  
-	  
-	  <div id="draw_here" style="margin-top: -600px;">
-	
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/pulse-button.css">
+	<link rel="stylesheet" type="text/css" href="css/futuristic.css">
+	<style>
+		html,body{
+			height: 100%;
+			position: relative;
+		}
+		.bg { 
+			  /* The image used 
+			  background-image: url("images/background.png");*/
+			  background-color: black;
+			  /* Full height */
+			  height: 100%; 
+			 /* position: absolute;
+			   Center and scale the image nicely */
+			  background-position: center;
+			  background-repeat: no-repeat;
+			  background-size: cover;
+			  filter:blur(1px);
+ 
+			}
+		.row{
+			    height: 100%;
+			    width: 100%;
+			    /* position: absolute; */
+			    top: 0;
+			    left: 0;
+		}
+		* {
+		  box-sizing: border-box;
+		  
+		}
+
+		/* Create three equal columns that floats next to each other */
+		.column {
+		  float: left;
+		  width: 33.33%;
+		  padding: 10px;
+		  height: 100%; /* Should be removed. Only for demonstration */
+
+		}
+
+		/* Clear floats after the columns */
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+
+		/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+		@media screen and (max-width: 600px) {
+		  .column {
+		    width: 100%;
+		  }
+		}
+
+		
+	</style>
+	</head>
+	<body onload="init();"> 
+		<div class="bg"></div>
+		<div class="row" style="position: absolute;">
+		  <div class="column" >
+		    <h2>Column 1</h2>
+		    <p>Some text..</p>
+		  </div>
+		  <div class="column" >
+		    <h2>Column 2</h2>
+		    <p>Some text..</p>
+		  </div>
+		  <div class="column" >
+		    <div class="futurepanel" style="width: 100%; height: 100%;">
+
+			    <div class="futurepanel__header">
+			    	<center>
+			    		<h1 class="futurepanel__title">Control Pannel</h1>
+			    	</center>
+			      
+			    </div>
+			    <div class="futurepanel__body">
+			    	<center>
+						<!--
+						<button  class="futurebutton" onclick="startWebcam();">Start WebCam</button>
+						<button  class="futurebutton" onclick="stopWebcam();" >Stop WebCam</button> 
+						<button  class="futurebutton" onclick="snapshot();">Take Snapshot</button> 
+						-->
+						<video onclick="snapshot(this);" style="width:100%; max-width:640px;" id="video" controls autoplay></video>
+
+						<p id="status"></p>
+					  
+						<!--
+						<button  class="futurebutton" onclick="calculate_percentage()">Calculeaza procentaj</button>
+						<button  class="futurebutton" onclick="drawVisionImage()">Computer Vision</button>
+						<button  class="futurebutton" onclick="showQuadrantColor()">showQuadrantColor</button>
+						-->
+						<canvas  id="myCanvas" style="display:none;" width="640" height="480" ></canvas>
+						  
+						  
+						<div id="draw_here" style="margin-top: -600px; display:none;">
+						</div>
+			    	</center>
+			      
+			    </div>
+			    <div class="futurepanel__footer">
+			      <div>#0002134678 TFFC:3 ///////////// </div>
+			    </div>
+			</div>
+
+		  </div>
 		</div>
-
-
-
-	
-  </body>
-  
-  <script src="scripts/snapshot.js"></script>
-  
-  
-  
-<script src="scripts/getColor.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-	
-
-function calculate_percentage(){
-	var redc=0,bluec=0,greenc=0,whitec=0,blackc=0,yellowc=0,silverc=0;
-	for(var x=0;x<640;x++){
-		for(var y=0;y<480;y++){
-			var context = canvas.getContext('2d');
-   		    var pixelData = context.getImageData(x, y, 1, 1).data;
-   		    var auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
-   		    if(auxColor == "red")
-   		    	redc++;
-   		    if(auxColor == "blue")
-   		    	bluec++;
-   		    if(auxColor == "green")
-   		    	greenc++;
-   		    if(auxColor == "white")
-   		    	whitec++;
-   		    if(auxColor == "black")
-   		    	blackc++;
-			if(auxColor == "yellow")
-				yellowc++;
-			if(auxColor == "silver")
-				silverc++;
-   		    //blue+=pixelData[1];
-   		    //green+=pixelData[1];
-		}
-	}
-	var total=redc+bluec+greenc+whitec+blackc+yellowc+silverc;
-	redc = (redc/total)*100;
-	bluec = (bluec/total)*100;
-	greenc = (greenc/total)*100;
-	whitec = (whitec/total)*100;
-	blackc = (blackc/total)*100;
-	yellowc = (yellowc/total)*100;
-	silverc = (silverc/total)*100;
-	document.getElementById("status").innerHTML = "red: " +  redc 
-													+"<br> blue: "+ bluec 
-													+ " <br> "+ "green: "+greenc
-													+ " <br> white: "+whitec 
-													+ " <br> black: "+ blackc 
-													+ " <br> yellow: "+yellowc
-													+ " <br> silver: "+silverc;
-
-	
-	
-	
-	
-}
-
-
-
-function drawVisionImage(){
-
-/* computer vision now*/
-	
-	var img_table="";
-	var context = canvas.getContext('2d');
-	var pixelData,auxColor;
-	
-	
-	console.log("line 233");
-	//for (var i = 0, num = 200 / 10; i <= num; i+=.01) {
-	for (var i = 0; i < 640; i=i+10) {
-		for (var j = 480; j > 0; j=j-10){
-		//console.log("still running"+i+" "+j);
 			
-   		    pixelData = context.getImageData(i, j, 1, 1).data;
-   		    auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
-			Image_Matrix[j][i]=auxColor;
-		//img_table+='<div style="width:1px; height:1px; float:right; background-color: rgb(255,255,255);"><div>';
-		//document.getElementById("draw_here").innerHTML+='<div style="width:10px; height:10px; float:left; background-color: rgb('+pixelData[0]+','+pixelData[1]+','+pixelData[2]+');"></div>';
-		document.getElementById("draw_here").innerHTML+='<div style="width:10px; height:10px; float:left; background-color:'+auxColor+'"></div>';
+			
 		
-		// use a color triad of Microsofts million dollar color
-		//p.buffer[p.index(i,j)] = p.color(pixelData[0],pixelData[1],pixelData[2],250);
-		}
-		console.log(i);
-		document.getElementById("draw_here").innerHTML+="<br>";
-		//img_table+="<br>";
-		//document.getElementById("draw_here").innerHTML+="<br>";
-		//console.log("still running");
-		//console.log(img_table);
-		//document.getElementById("draw_here").innerHTML+=img_table;
-		//img_table=" ";
 		
-	}
-
-	//document.getElementById("draw_here").innerHTML=img_table;
-	console.log("done");
-	
-	
-document.getElementById("draw_here").style="transform: rotate(-90deg); margin-top:-600px;"
-}
-
-</script>
-  
-  
- <script type="text/javascript">
- 
-	function indexOfMax(arr) {
-		    if (arr.length === 0) {
-		        return -1;
-		    }
-
-		    var max = arr[0];
-		    var maxIndex = 0;
-
-		    for (var i = 1; i < arr.length; i++) {
-		        if (arr[i] > max) {
-		            maxIndex = i;
-		            max = arr[i];
-		        }
-		    }
-
-		    return maxIndex;
-		}
- 
- 
-	function getColorQuadrant(quadrant){
 		
-		var redc=0,bluec=0,greenc=0,whitec=0,blackc=0,yellowc=0,silverc=0;
-		var max,maxColor;
 		
-		if(quadrant==11){
 		
-			for(var x=0;x<320;x=x+10){
-				for(var y=0;y<240;y=y+10){
-					var context = canvas.getContext('2d');
-					var pixelData = context.getImageData(x, y, 10, 10).data;
-					var auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
-					
-					if(auxColor == "red")
-						redc++;
-					if(auxColor == "blue")
-						bluec++;
-					if(auxColor == "green")
-						greenc++;
-					if(auxColor == "white")
-						whitec++;
-					if(auxColor == "black")
-						blackc++;
-					if(auxColor == "yellow")
-						yellowc++;
-					if(auxColor == "silver")
-						silverc++;
-					//blue+=pixelData[1];
-					//green+=pixelData[1];
-				}
+		
+			<script src="scripts/snapshot.js"></script>
+			<script src="scripts/getColor.js" type="text/javascript"></script>
+			<script type="text/javascript" src="scripts/ComputerVision.js"></script>
+			<script type="text/javascript" src="scripts/getQuadrant.js"></script>
+			 <script type="text/javascript">
+				function showQuadrantColor(){
+				
+					var a = performance.now();
+					//
+					document.getElementById("status").innerHTML="Quadrant 1-1 : "+getColorQuadrant(11)+" ,<br />"+
+																"Quadrant 1-2 : "+getColorQuadrant(12)+" ,<br />"+
+																"Quadrant 2-1 : "+getColorQuadrant(21)+" ,<br />"+
+																"Quadrant 2-2 : "+getColorQuadrant(22)+" ,<br />";
+					var b = performance.now();
+					//alert('It took ' + (b - a) + ' ms.');
 			}
-		}
-		if(quadrant==12){
-		
-			for(var x=320;x<640;x=x+10){
-				for(var y=0;y<240;y=y+10){
-					var context = canvas.getContext('2d');
-					var pixelData = context.getImageData(x, y, 10, 10).data;
-					var auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
-					
-					if(auxColor == "red")
-						redc++;
-					if(auxColor == "blue")
-						bluec++;
-					if(auxColor == "green")
-						greenc++;
-					if(auxColor == "white")
-						whitec++;
-					if(auxColor == "black")
-						blackc++;
-					if(auxColor == "yellow")
-						yellowc++;
-					if(auxColor == "silver")
-						silverc++;
-					//blue+=pixelData[1];
-					//green+=pixelData[1];
-				}
-			}
-		}
-		
-		if(quadrant==21){
-		
-			for(var x=0;x<320;x=x+10){
-				for(var y=240;y<480;y=y+10){
-					var context = canvas.getContext('2d');
-					var pixelData = context.getImageData(x, y, 10, 10).data;
-					var auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
-					
-					if(auxColor == "red")
-						redc++;
-					if(auxColor == "blue")
-						bluec++;
-					if(auxColor == "green")
-						greenc++;
-					if(auxColor == "white")
-						whitec++;
-					if(auxColor == "black")
-						blackc++;
-					if(auxColor == "yellow")
-						yellowc++;
-					if(auxColor == "silver")
-						silverc++;
-					//blue+=pixelData[1];
-					//green+=pixelData[1];
-				}
-			}
-		}
-		
-		if(quadrant==22){
-		
-			for(var x=320;x<640;x=x+10){
-				for(var y=240;y<480;y=y+10){
-					var context = canvas.getContext('2d');
-					var pixelData = context.getImageData(x, y, 10, 10).data;
-					var auxColor =  getColor(pixelData[0],pixelData[1],pixelData[2]);
-					
-					if(auxColor == "red")
-						redc++;
-					if(auxColor == "blue")
-						bluec++;
-					if(auxColor == "green")
-						greenc++;
-					if(auxColor == "white")
-						whitec++;
-					if(auxColor == "black")
-						blackc++;
-					if(auxColor == "yellow")
-						yellowc++;
-					if(auxColor == "silver")
-						silverc++;
-					//blue+=pixelData[1];
-					//green+=pixelData[1];
-				}
-			}
-		}
-		var colorArr=new Array(redc,bluec,greenc,whitec,blackc,yellowc,silverc);
-		max=indexOfMax(colorArr);
-		switch(max){
-			case 0:
-				maxColor="red";
-				break;
-			case 1:
-				maxColor="blue";
-				break;
-			case 2:
-				maxColor="green";
-				break;
-			case 3:
-				maxColor="white";
-				break;
-			case 4:
-				maxColor="black";
-				break;
-			case 5:
-				maxColor="yellow";
-				break;
-			case 6:
-				maxColor="silver";
-				break;
-		}
-		return maxColor;
-		
-		
-		
-		
-		/*var total=redc+bluec+greenc+whitec+blackc+yellowc+silverc;
-		redc = (redc/total)*100;
-		bluec = (bluec/total)*100;
-		greenc = (greenc/total)*100;
-		whitec = (whitec/total)*100;
-		blackc = (blackc/total)*100;
-		yellowc = (yellowc/total)*100;
-		silverc = (silverc/total)*100;*/
-		
-	}
- </script>
- 
- <script type="text/javascript">
-	function showQuadrantColor(){
-	
-		var a = performance.now();
-		//
-		document.getElementById("status").innerHTML="Quadrant 1-1 : "+getColorQuadrant(11)+" ,<br />"+
-													"Quadrant 1-2 : "+getColorQuadrant(12)+" ,<br />"+
-													"Quadrant 2-1 : "+getColorQuadrant(21)+" ,<br />"+
-													"Quadrant 2-2 : "+getColorQuadrant(22)+" ,<br />";
-		var b = performance.now();
-		//alert('It took ' + (b - a) + ' ms.');
-}
 
- </script>
-  
- <script type="text/javascript">
-	var myVar;
-	var HistoryArray=[];
-	startWebcam();
-	myVar = setInterval(checkQuadrants, 100);
-	function checkQuadrants() {
-		snapshot();
-		showQuadrantColor();
-		var x={
-			q11:getColorQuadrant(11),
-			q12:getColorQuadrant(12),
-			q21:getColorQuadrant(21),
-			q22:getColorQuadrant(22),
-		};
-		//console.log(x);
-		HistoryArray.push(x);
-		console.log(HistoryArray[HistoryArray.length-1]);
+			 </script>
+			 <script type="text/javascript">
+				var myVar;
+				var HistoryArray=[];
+				startWebcam();
+				myVar = setInterval(checkQuadrants, 100);
+				function checkQuadrants() {
+					snapshot();
+					showQuadrantColor();
+					var x={
+						q11:getColorQuadrant(11),
+						q12:getColorQuadrant(12),
+						q21:getColorQuadrant(21),
+						q22:getColorQuadrant(22),
+					};
+					//console.log(x);
+					HistoryArray.push(x);
+					console.log(HistoryArray[HistoryArray.length-1]);
 
-		if(HistoryArray[HistoryArray.length-1].q11=="green" && 
-		   HistoryArray[HistoryArray.length-1].q12=="green" && 
-		   HistoryArray[HistoryArray.length-1].q21=="green" &&
-		   HistoryArray[HistoryArray.length-1].q22=="green" &&
-		   HistoryArray[HistoryArray.length-2].q11=="green" && 
-		   HistoryArray[HistoryArray.length-2].q12=="green" && 
-		   HistoryArray[HistoryArray.length-2].q21=="green" &&
-		   HistoryArray[HistoryArray.length-2].q22=="green" 		   ){
-			alert("full cover");
-		}
-		else{
-			if(HistoryArray[HistoryArray.length-2].q12=="green" && HistoryArray[HistoryArray.length-2].q22=="green" ){
-				if(HistoryArray[HistoryArray.length-1].q11=="green" && HistoryArray[HistoryArray.length-1].q21=="green" )
-					alert("Swipe right");	
-			}
-			else{
-				if(HistoryArray[HistoryArray.length-2].q11=="green" && HistoryArray[HistoryArray.length-2].q21=="green" ){
-					if(HistoryArray[HistoryArray.length-1].q12=="green" && HistoryArray[HistoryArray.length-1].q22=="green" )
-						alert("Swipe left");
-					}
-				else{
-					if(HistoryArray[HistoryArray.length-2].q21=="green" && HistoryArray[HistoryArray.length-2].q22=="green" ){
-						if(HistoryArray[HistoryArray.length-1].q11=="green" && HistoryArray[HistoryArray.length-1].q12=="green" )	
-							alert("Swipe up");
+					if(HistoryArray[HistoryArray.length-1].q11=="green" && 
+					   HistoryArray[HistoryArray.length-1].q12=="green" && 
+					   HistoryArray[HistoryArray.length-1].q21=="green" &&
+					   HistoryArray[HistoryArray.length-1].q22=="green" &&
+					   HistoryArray[HistoryArray.length-2].q11=="green" && 
+					   HistoryArray[HistoryArray.length-2].q12=="green" && 
+					   HistoryArray[HistoryArray.length-2].q21=="green" &&
+					   HistoryArray[HistoryArray.length-2].q22=="green"){
+						alert("full cover");
 					}
 					else{
-						if(HistoryArray[HistoryArray.length-2].q11=="green" && HistoryArray[HistoryArray.length-2].q12=="green" ){
-							if(HistoryArray[HistoryArray.length-1].q21=="green" && HistoryArray[HistoryArray.length-1].q22=="green" )
-								alert("Swipe down");
+						if(HistoryArray[HistoryArray.length-2].q12=="green" && HistoryArray[HistoryArray.length-2].q22=="green" ){
+							if(HistoryArray[HistoryArray.length-1].q11=="green" && HistoryArray[HistoryArray.length-1].q21=="green" )
+								alert("Swipe right");	
+						}
+						else{
+							if(HistoryArray[HistoryArray.length-2].q11=="green" && HistoryArray[HistoryArray.length-2].q21=="green" ){
+								if(HistoryArray[HistoryArray.length-1].q12=="green" && HistoryArray[HistoryArray.length-1].q22=="green" )
+									alert("Swipe left");
+								}
+							else{
+								if(HistoryArray[HistoryArray.length-2].q21=="green" && HistoryArray[HistoryArray.length-2].q22=="green" ){
+									if(HistoryArray[HistoryArray.length-1].q11=="green" && HistoryArray[HistoryArray.length-1].q12=="green" )	
+										alert("Swipe up");
+								}
+								else{
+									if(HistoryArray[HistoryArray.length-2].q11=="green" && HistoryArray[HistoryArray.length-2].q12=="green" ){
+										if(HistoryArray[HistoryArray.length-1].q21=="green" && HistoryArray[HistoryArray.length-1].q22=="green" )
+											alert("Swipe down");
+										}
+								}
 							}
+							
+						}
 					}
+					
+					
+					/*
+					
+					if(HistoryArray[HistoryArray.length-1].q11=="red" && HistoryArray[HistoryArray.length-1].q21=="red" ){
+							alert("Swipe right");
+					}
+					if(HistoryArray[HistoryArray.length-1].q12=="red" && HistoryArray[HistoryArray.length-1].q22=="red" ){
+							alert("Swipe left");
+					}
+					if(HistoryArray[HistoryArray.length-1].q11=="red" && HistoryArray[HistoryArray.length-1].q12=="red" ){
+							alert("Swipe up");
+					}
+					if(HistoryArray[HistoryArray.length-1].q21=="red" && HistoryArray[HistoryArray.length-1].q22=="red" ){
+							alert("Swipe down");
+					}
+					*/
+					
 				}
-				
-			}
+			 </script>
 			
 			
-		}
-		
-		
-		/*
-		
-		if(HistoryArray[HistoryArray.length-1].q11=="red" && HistoryArray[HistoryArray.length-1].q21=="red" ){
-				alert("Swipe right");
-		}
-		if(HistoryArray[HistoryArray.length-1].q12=="red" && HistoryArray[HistoryArray.length-1].q22=="red" ){
-				alert("Swipe left");
-		}
-		if(HistoryArray[HistoryArray.length-1].q11=="red" && HistoryArray[HistoryArray.length-1].q12=="red" ){
-				alert("Swipe up");
-		}
-		if(HistoryArray[HistoryArray.length-1].q21=="red" && HistoryArray[HistoryArray.length-1].q22=="red" ){
-				alert("Swipe down");
-		}
-		*/
-		
-	}
- </script>
-  
-</html>
+			
+			
+	</body>
+	
+	
+	
+	
+	</html>
