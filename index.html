@@ -2,121 +2,334 @@
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>WAID</title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/pulse-button.css">
 	<link rel="stylesheet" type="text/css" href="css/futuristic.css">
+	<link rel="stylesheet" href="css/typewriter.css" />
 	<style>
 		html,body{
 			height: 100%;
 			position: relative;
 		}
+		/*
 		.bg { 
-			  /* The image used 
-			  background-image: url("images/background.png");*/
-			  background-color: black;
-			  /* Full height */
+	
+			  background-image: url("images/background.png");
+			  background-color: black;/
 			  height: 100%; 
-			 /* position: absolute;
-			   Center and scale the image nicely */
+			  position: absolute;
+			   Center and scale the image nicely 
 			  background-position: center;
 			  background-repeat: no-repeat;
 			  background-size: cover;
 			  filter:blur(1px);
  
 			}
-		.row{
-			    height: 100%;
-			    width: 100%;
-			    /* position: absolute; */
-			    top: 0;
-			    left: 0;
-		}
+	*/
+	
 		* {
 		  box-sizing: border-box;
 		  
 		}
 
-		/* Create three equal columns that floats next to each other */
-		.column {
-		  float: left;
-		  width: 33.33%;
-		  padding: 10px;
-		  height: 100%; /* Should be removed. Only for demonstration */
-
+		.container-fluid{
+			height:100%;
+			background-color:black;
 		}
 
-		/* Clear floats after the columns */
-		.row:after {
-		  content: "";
-		  display: table;
-		  clear: both;
+		
+		.futurepanel{
+			height: 100%;
+		}
+		
+		.futureText{
+			color:rgba(120, 200, 255, 0.8);
+		}
+		.clickable:hover{
+			background-color:rgba(64, 99, 101, 0.6);
 		}
 
-		/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-		@media screen and (max-width: 600px) {
-		  .column {
-		    width: 100%;
-		  }
+		#MainMenu{
+			width:90%; 
+			margin-top:100px;
+			height:500px;
+			z-index:9999;
+			background-color: rgba(28, 127, 197, 0.4);
+			font-size:30px;
+			display:block;
 		}
-
+		#MainMenu table{
+			width:100%;
+			overflow-y:scroll;
+			color:rgba(120, 200, 255, 0.8);
+		}
+		#MainMenu td{
+			padding:15px;
+			border: 2px solid rgba(120, 200, 255, 0.8);
+		}
+		
+		#MainMenu img{
+			height:50px;
+		}
+		
+		.ActiveBackground{
+			background-color:rgba(120, 200, 255, 0.8);
+		}
+		
+		
 		
 	</style>
 	</head>
 	<body onload="init();"> 
-		<div class="bg"></div>
-		<div class="row" style="position: absolute;">
-		  <div class="column" >
-		    <h2>Column 1</h2>
-		    <p>Some text..</p>
-		  </div>
-		  <div class="column" >
-		    <h2>Column 2</h2>
-		    <p>Some text..</p>
-		  </div>
-		  <div class="column" >
-		    <div class="futurepanel" style="width: 100%; height: 100%;">
-
-			    <div class="futurepanel__header">
-			    	<center>
-			    		<h1 class="futurepanel__title">Control Pannel</h1>
-			    	</center>
-			      
-			    </div>
-			    <div class="futurepanel__body">
-			    	<center>
-						<!--
-						<button  class="futurebutton" onclick="startWebcam();">Start WebCam</button>
-						<button  class="futurebutton" onclick="stopWebcam();" >Stop WebCam</button> 
-						<button  class="futurebutton" onclick="snapshot();">Take Snapshot</button> 
-						-->
-						<video onclick="snapshot(this);" style="width:100%; max-width:640px;" id="video" controls autoplay></video>
-
-						<p id="status"></p>
-					  
-						<!--
-						<button  class="futurebutton" onclick="calculate_percentage()">Calculeaza procentaj</button>
-						<button  class="futurebutton" onclick="drawVisionImage()">Computer Vision</button>
-						<button  class="futurebutton" onclick="showQuadrantColor()">showQuadrantColor</button>
-						-->
-						<canvas  id="myCanvas" style="display:none;" width="640" height="480" ></canvas>
-						  
-						  
-						<div id="draw_here" style="margin-top: -600px; display:none;">
+		<div class="container-fluid">
+			<!--<div class="bg"></div>-->
+				<div class="row" style="height:100%;">
+				  <div class="col-md-8" style="overflow-y:scroll; height:100%;" >
+					<!--<h2 class="futureText">Column 1</h2>
+					<center>
+						<div class="typewriter">
+							<h1 class="futureText">Hello, My name is WAID, and I am here to help you</h1>
 						</div>
-			    	</center>
-			      
-			    </div>
-			    <div class="futurepanel__footer">
-			      <div>#0002134678 TFFC:3 ///////////// </div>
-			    </div>
-			</div>
+					</center>
+					-->
+					<center>
+						<div id="MainMenu">
+							<table id="MainMenuTable">
+								<tr>
+									<td colspan="5"><center><h1>Main Menu</h1></center></td>
+								</tr>
+								<tr>
+									<td id="cell_11">
+										<center>
+											<img src="https://1001freedownloads.s3.amazonaws.com/vector/thumb/70315/1380016560.png" alt="" />
+											<h1>Settings</h1> 
+										</center>
+									</td>
+									<td id="cell_12">
+										<center>
+											<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Icon_Clock.svg/1024px-Icon_Clock.svg.png" alt="" />
+											<h1>Clock</h1>
+										</center>
+									</td>
+									<td id="cell_13">
+										<center>
+											<img src="https://lh3.googleusercontent.com/7rADIIAXkEedoq9sf6SO4ZiBXkpu-XQCJBxratH4Ij4D1LxH4NbvcdRPLmjdsxfG662h" alt="" />
+											<h1>Gallery</h1> 
+										</center>
+									</td>
+									<td id="cell_14">
+										<center>
+											<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Calculator_icon.svg/512px-Calculator_icon.svg.png" alt="" />
+											<h1>Calculator</h1> 
+										</center>
+									</td>
+									<td id="cell_15">
+										<center>
+											<img src="http://www.stickpng.com/assets/images/5847f9cbcef1014c0b5e48c8.png" alt="" />
+											<h1>Google</h1> 
+										</center>
+									</td>
+								</tr>
+								
+								<tr>
+									<td id="cell_21">
+										<center>
+											<img src="http://icons.iconarchive.com/icons/danleech/simple/256/facebook-icon.png" alt="" />
+											<h1>Facebook</h1> 
+										</center>
+									</td>
+									<td id="cell_22">
+										<center>
+											<img src="http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c545.png" alt="" />
+											<h1>YouTube</h1> 
+										</center>
+									</td>
+									<td id="cell_23">
+										<center>
+											<img src="http://files.softicons.com/download/application-icons/circle-icons-add-on-2-by-martz90/png/512x512/notepad.png" alt="" />
+											<h1>Notepad</h1> 
+										</center>
+									</td>
+									<td id="cell_24"> 
+										<center>
+											<img src="http://files.softicons.com/download/system-icons/mac-os-apps-icons-3-by-hamza-saleem/ico/Contacts%20v2.ico" alt="" />
+											<h1>Contacts</h1> 
+										</center>
+									</td>
+									<td id="cell_25">
+										<center>
+											<img src="http://www.iconarchive.com/download/i78239/igh0zt/ios7-style-metro-ui/MetroUI-Other-Mail.ico" alt="" />
+											<h1>Email</h1> 
+										</center>
+									</td>
+								</tr>
+							</table>
+						</div>
+					
+						<h1 class="futureText" style="padding:30px; font-size:80px;">W.A.I.D.</h1>
+					</center>
+					<div class="row" style="height:150px;">
+						<div class="futurepanel clickable col-md-3"></div>
+						<div class="futurepanel clickable col-md-3"></div>
+						<div class="futurepanel clickable col-md-3"></div>
+						<div class="futurepanel clickable col-md-3"></div>
+					</div>
+					<div class="row" style="margin-top:50px;">
+						<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+						  <!-- Indicators -->
+						  <ol class="carousel-indicators">
+							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#myCarousel" data-slide-to="2"></li>
+						  </ol>
+					
+						  <!-- Wrapper for slides -->
+						  <div class="carousel-inner">
+							<div class="item active">
+								<center>
+									<img src="https://images.pexels.com/photos/66997/pexels-photo-66997.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=400" style="height:300px;" alt="Los Angeles">
+								</center>
+							</div>
+							<div class="item">
+								<center>
+									<img src="https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"  style="height:300px;" alt="Chicago">
+								</center>
+							</div>
+							<div class="item">
+								<center>
+									<img src="https://thumbs.dreamstime.com/z/wood-table-top-garden-city-background-image-66368947.jpg"  style="height:300px;" alt="New York">
+								</center>
+							</div>
+						  </div>
 
-		  </div>
+						  <!-- Left and right controls 
+						  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left"></span>
+							<span class="sr-only">Previous</span>
+						  </a>
+						  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right"></span>
+							<span class="sr-only">Next</span>
+						  </a>
+						  -->
+						</div>
+					</div>
+					
+					
+					
+					
+					
+				  </div>
+
+				  <div class="col-md-4 futurepanel" >
+
+
+						<div class="futurepanel__header">
+							<center>
+								<h1 class="futurepanel__title">Control Pannel</h1>
+							</center>
+						  
+						</div>
+						<div class="futurepanel__body">
+							<center>
+								<!--
+								<button  class="futurebutton" onclick="startWebcam();">Start WebCam</button>
+								<button  class="futurebutton" onclick="stopWebcam();" >Stop WebCam</button> 
+								<button  class="futurebutton" onclick="snapshot();">Take Snapshot</button> 
+								-->
+								<video onclick="snapshot(this);" style="width:100%; max-width:640px;" id="video" controls autoplay></video>
+
+								<p id="status"></p>
+							  
+								<!--
+								<button  class="futurebutton" onclick="calculate_percentage()">Calculeaza procentaj</button>
+								<button  class="futurebutton" onclick="drawVisionImage()">Computer Vision</button>
+								<button  class="futurebutton" onclick="showQuadrantColor()">showQuadrantColor</button>
+								-->
+								<canvas  id="myCanvas" style="display:none;" width="640" height="480" ></canvas>
+								  
+								  
+								<div id="draw_here" style="margin-top: -600px; display:none;">
+								</div>
+							</center>
+						  
+						</div>
+						<div class="futurepanel__footer">
+						  <div>#0002134678 TFFC:3 ///////////// </div>
+						</div>
+
+
+				  </div>
+				</div>
 		</div>
+		
 			
 			
 		
-		
+		<script type="text/javascript">
+			var menuMatrix=[
+				[1,0,0,0,0],
+				[0,0,0,0,0]
+			];
+			
+			
+			
+			function activeBackground(x,y){
+				
+				var c11 = document.getElementById("cell_11");
+				var c12 = document.getElementById("cell_12");
+				var c13 = document.getElementById("cell_13");
+				var c14 = document.getElementById("cell_14");
+				var c15 = document.getElementById("cell_15");
+				
+				var c21 = document.getElementById("cell_21");
+				var c22 = document.getElementById("cell_22");
+				var c23 = document.getElementById("cell_23");
+				var c24 = document.getElementById("cell_24");
+				var c25 = document.getElementById("cell_25");
+				
+				
+				
+				c11.classList.remove("ActiveBackground");
+				c12.classList.remove("ActiveBackground");
+				c13.classList.remove("ActiveBackground");
+				c14.classList.remove("ActiveBackground");
+				c15.classList.remove("ActiveBackground");
+				
+				c21.classList.remove("ActiveBackground");
+				c22.classList.remove("ActiveBackground");
+				c23.classList.remove("ActiveBackground");
+				c24.classList.remove("ActiveBackground");
+				c25.classList.remove("ActiveBackground");
+				
+				if(x==1){
+					if(y==1) c11.classList.add("ActiveBackground");
+					if(y==2) c12.classList.add("ActiveBackground");
+					if(y==3) c13.classList.add("ActiveBackground");
+					if(y==4) c14.classList.add("ActiveBackground");
+					if(y==5) c15.classList.add("ActiveBackground");
+				}
+				
+				if(x==2){
+					if(y==1) c21.classList.add("ActiveBackground");
+					if(y==2) c22.classList.add("ActiveBackground");
+					if(y==3) c23.classList.add("ActiveBackground");
+					if(y==4) c24.classList.add("ActiveBackground");
+					if(y==5) c25.classList.add("ActiveBackground");
+				}
+				
+				
+			}
+			
+			activeBackground(1,1);
+			
+		</script>
 		
 		
 		
@@ -140,8 +353,69 @@
 
 			 </script>
 			 <script type="text/javascript">
+			 
+			 
+				function SwipeLeft(){
+					
+					
+					
+					
+
+				}
+				
+				function SwipeRight(){
+				
+					if(menuMatrix[0][0]==1){
+						menuMatrix[0][0]=0;
+						menuMatrix[0][1]=1;
+						activeBackground(1,2);
+						console.log(menuMatrix);
+					}else if(menuMatrix[0][1]==1){
+						menuMatrix[0][1]=0;
+						menuMatrix[0][2]=1;
+						activeBackground(1,3);
+						console.log(menuMatrix);
+					}else if(menuMatrix[0][2]==1){
+						menuMatrix[0][2]=0;
+						menuMatrix[0][3]=1;
+						activeBackground(1,4);
+						console.log(menuMatrix);
+					}else if(menuMatrix[0][3]==1){
+						menuMatrix[0][3]=0;
+						menuMatrix[0][4]=1;
+						activeBackground(1,5);
+						console.log(menuMatrix);
+					}else if(menuMatrix[0][4]==1){
+						menuMatrix[0][4]=0;
+						menuMatrix[1][0]=1;
+						activeBackground(2,1);
+						console.log(menuMatrix);
+					}else if(menuMatrix[1][0]==1){
+						menuMatrix[1][0]=0;
+						menuMatrix[1][1]=1;
+						activeBackground(2,2);
+						console.log(menuMatrix);
+					}else if(menuMatrix[1][1]==1){
+						menuMatrix[1][1]=0;
+						menuMatrix[1][2]=1;
+						activeBackground(2,3);
+						console.log(menuMatrix);
+					}else if(menuMatrix[1][2]==1){
+						menuMatrix[1][2]=0;
+						menuMatrix[1][3]=1;
+						activeBackground(2,4);
+						console.log(menuMatrix);
+					}
+					
+				}
+			 
+			 
+			 
+			 
 				var myVar;
 				var HistoryArray=[];
+				var MainColor="green";
+				
 				startWebcam();
 				myVar = setInterval(checkQuadrants, 100);
 				function checkQuadrants() {
@@ -155,8 +429,8 @@
 					};
 					//console.log(x);
 					HistoryArray.push(x);
-					console.log(HistoryArray[HistoryArray.length-1]);
-
+					//console.log(HistoryArray[HistoryArray.length-1]);
+					
 					if(HistoryArray[HistoryArray.length-1].q11=="green" && 
 					   HistoryArray[HistoryArray.length-1].q12=="green" && 
 					   HistoryArray[HistoryArray.length-1].q21=="green" &&
@@ -170,12 +444,14 @@
 					else{
 						if(HistoryArray[HistoryArray.length-2].q12=="green" && HistoryArray[HistoryArray.length-2].q22=="green" ){
 							if(HistoryArray[HistoryArray.length-1].q11=="green" && HistoryArray[HistoryArray.length-1].q21=="green" )
-								alert("Swipe right");	
+								//alert("Swipe right");	
+								SwipeRight();
 						}
 						else{
 							if(HistoryArray[HistoryArray.length-2].q11=="green" && HistoryArray[HistoryArray.length-2].q21=="green" ){
 								if(HistoryArray[HistoryArray.length-1].q12=="green" && HistoryArray[HistoryArray.length-1].q22=="green" )
-									alert("Swipe left");
+									//alert("Swipe left");
+									SwipeLeft();
 								}
 							else{
 								if(HistoryArray[HistoryArray.length-2].q21=="green" && HistoryArray[HistoryArray.length-2].q22=="green" ){
@@ -212,6 +488,44 @@
 					
 				}
 			 </script>
+			 
+			 
+			 
+			
+			<script>
+			
+				var recognition = new webkitSpeechRecognition();
+				recognition.continuous = true;
+				reset();
+				recognition.onend = reset();
+				toggleStartStop();
+				
+				recognition.onresult = function (event) {
+				  for (var i = event.resultIndex; i < event.results.length; ++i) {
+					if (event.results[i].isFinal) {
+					  console.log(event.results[i][0].transcript);
+					}
+				  }
+				}
+
+				function reset() {
+				  recognizing = false;
+				 
+				}
+
+				function toggleStartStop() {
+				  if (recognizing) {
+					recognition.stop();
+					reset();
+				  } else {
+					recognition.start();
+					recognizing = true;
+					
+				  }
+				  console.log(recognizing);
+				}
+				
+			</script>
 			
 			
 			
