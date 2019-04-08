@@ -71,7 +71,8 @@
 		}
 		#MainMenu td{
 			padding:15px;
-			border: 2px solid rgba(120, 200, 255, 0.8);
+			/* border: 2px solid rgba(120, 200, 255, 0.8); */
+
 		}
 		
 		#MainMenu img{
@@ -80,6 +81,7 @@
 		
 		.ActiveBackground{
 			background-color:rgba(120, 200, 255, 0.8);
+
 		}
 		
 		
@@ -91,13 +93,19 @@
 			<!--<div class="bg"></div>-->
 				<div class="row" style="height:100%;">
 				  <div class="col-md-8" style="overflow-y:scroll; height:100%;" >
-					<!--<h2 class="futureText">Column 1</h2>
+				  
+				  
 					<center>
+						<h1 class="futureText" style="padding:30px; font-size:80px;">W.A.I.D.</h1>
 						<div class="typewriter">
-							<h1 class="futureText">Hello, My name is WAID, and I am here to help you</h1>
+							<h1 class="futureText">Hello, I am WAID, and I am here to help you</h1>
+							<h1 class="futureText">This is the Main Menu Page.</h1>
+							<h1 class="futureText"> Feel free to use it</h1>
 						</div>
 					</center>
-					-->
+					<!---->
+					
+					
 					<center>
 						<div id="MainMenu">
 							<table id="MainMenuTable">
@@ -152,13 +160,13 @@
 									</td>
 									<td id="cell_23">
 										<center>
-											<img src="http://files.softicons.com/download/application-icons/circle-icons-add-on-2-by-martz90/png/512x512/notepad.png" alt="" />
+											<img src="https://purepng.com/public/uploads/large/purepng.com-notes-iconsymbolsiconsapple-iosiosios-8-iconsios-8-721522596090jwgta.png" alt="" />
 											<h1>Notepad</h1> 
 										</center>
 									</td>
 									<td id="cell_24"> 
 										<center>
-											<img src="http://files.softicons.com/download/system-icons/mac-os-apps-icons-3-by-hamza-saleem/ico/Contacts%20v2.ico" alt="" />
+											<img src="https://purepng.com/public/uploads/large/purepng.com-contacts-icon-galaxy-s6symbolsiconssamsungapp-iconsgalaxy-s6-icons-721522597448sudp9.png" alt="" />
 											<h1>Contacts</h1> 
 										</center>
 									</td>
@@ -172,54 +180,9 @@
 							</table>
 						</div>
 					
-						<h1 class="futureText" style="padding:30px; font-size:80px;">W.A.I.D.</h1>
+						
 					</center>
-					<div class="row" style="height:150px;">
-						<div class="futurepanel clickable col-md-3"></div>
-						<div class="futurepanel clickable col-md-3"></div>
-						<div class="futurepanel clickable col-md-3"></div>
-						<div class="futurepanel clickable col-md-3"></div>
-					</div>
-					<div class="row" style="margin-top:50px;">
-						<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-						  <!-- Indicators -->
-						  <ol class="carousel-indicators">
-							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-							<li data-target="#myCarousel" data-slide-to="1"></li>
-							<li data-target="#myCarousel" data-slide-to="2"></li>
-						  </ol>
 					
-						  <!-- Wrapper for slides -->
-						  <div class="carousel-inner">
-							<div class="item active">
-								<center>
-									<img src="https://images.pexels.com/photos/66997/pexels-photo-66997.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=400" style="height:300px;" alt="Los Angeles">
-								</center>
-							</div>
-							<div class="item">
-								<center>
-									<img src="https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"  style="height:300px;" alt="Chicago">
-								</center>
-							</div>
-							<div class="item">
-								<center>
-									<img src="https://thumbs.dreamstime.com/z/wood-table-top-garden-city-background-image-66368947.jpg"  style="height:300px;" alt="New York">
-								</center>
-							</div>
-						  </div>
-
-						  <!-- Left and right controls 
-						  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left"></span>
-							<span class="sr-only">Previous</span>
-						  </a>
-						  <a class="right carousel-control" href="#myCarousel" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right"></span>
-							<span class="sr-only">Next</span>
-						  </a>
-						  -->
-						</div>
-					</div>
 					
 					
 					
@@ -331,6 +294,137 @@
 			
 		</script>
 		
+		<script type="text/javascript">
+			
+			function WAID_speak(text){
+				
+				var speech = new SpeechSynthesisUtterance(text);
+				speech.lang = 'en-US';
+				window.speechSynthesis.speak(speech);
+			
+			}
+		
+		</script>
+		
+		
+		<script>
+			try {
+			  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+			  var recognition = new SpeechRecognition();
+			  recognition.continuous = true;
+
+			}
+			catch(e) {
+			  console.error(e);
+			}
+			
+			recognition.onstart = function() { 
+			  console.log('Voice recognition activated. Try speaking into the microphone.');
+			}
+
+			recognition.onspeechend = function() {
+			  console.log('You were quiet for a while so voice recognition turned itself off.');
+			  recognition.start();
+			}
+
+			recognition.onerror = function(event) {
+			  if(event.error == 'no-speech') {
+				console.log('No speech was detected. Try again.');  
+			  };
+			}
+			
+			recognition.onresult = function(event) {
+				
+				let content="";
+				// event is a SpeechRecognitionEvent object.
+			  // It holds all the lines we have captured so far. 
+			  // We only need the current one.
+			  var current = event.resultIndex;
+
+			  // Get a transcript of what was said.
+			  var transcript = event.results[current][0].transcript;
+
+			  // Add the current transcript to the contents of our Note.
+			  content += transcript;
+			  console.log(transcript);
+			  
+			    var str = transcript.toLowerCase(); 
+				console.log(str);
+				  if(str.match(/google/gi)){
+					var n = str.indexOf("google for");
+					//window.alert(n);
+					window.alert(str.substring(n+10));
+					 window.open('http://google.com/search?q='+str.substring(n+10));
+				  }else{
+					if(str.match(/google/gi)){
+					  var n = str.indexOf("google");
+					 // window.alert(n);
+					  window.alert(str.substring(n+6));
+					  window.open('http://google.com/search?q='+str.substring(n+6));
+					}
+				  }
+				  
+				  if(str.match(/youtube/gi)){
+					var n = str.indexOf("youtube for");
+					//window.alert(n);
+					window.alert(str.substring(n+11));
+					 window.open('http://www.youtube.com/results?q='+str.substring(n+10));
+				  }else{
+					if(str.match(/youtube/gi)){
+					  var n = str.indexOf("youtube");
+					  window.alert(n);
+					  window.alert(str.substring(n+6));
+					  window.open('http://www.youtube.com/results?q='+str.substring(n+6));
+					}
+				  }
+				  
+			  
+			}
+			
+			
+			 recognition.start();
+		</script>
+		
+		
+		
+		<script type="text/javascript">
+			function readMenu(){
+			
+				let current_i,current_j;
+				let textToRead=" ";
+				for(let i=0;i<2;i++)
+					for(let j=0;j<4;j++){
+						if(menuMatrix[i][j]==1){
+							current_i=i;
+							current_j=j;
+						}
+					}
+			
+			
+				if(current_i==0){
+					if(current_j==0) textToRead="Settings";
+					if(current_j==1) textToRead="Clock";
+					if(current_j==2) textToRead="Gallery";
+					if(current_j==3) textToRead="Calculator";
+					if(current_j==4) textToRead="Google";
+				}
+				
+				if(current_i==1){
+					if(current_j==0) textToRead="Facebook";
+					if(current_j==1) textToRead="Youtube";
+					if(current_j==2) textToRead="Notepad";
+					if(current_j==3) textToRead="Contacts";
+					if(current_j==4) textToRead="Email";
+				}
+					
+				WAID_speak(textToRead);
+				
+				
+				
+			
+			}
+		
+		</script>
 		
 		
 		
@@ -356,14 +450,59 @@
 			 
 			 
 				function SwipeLeft(){
+				
+				
 					
+					if(menuMatrix[1][4]==1){
+						menuMatrix[1][4]=0;
+						menuMatrix[1][3]=1;
+						activeBackground(2,3);
+						console.log(menuMatrix);
+					}else if(menuMatrix[1][3]==1){
+						menuMatrix[1][3]=0;
+						menuMatrix[1][2]=1;
+						activeBackground(2,2);
+						console.log(menuMatrix);
+					}else if(menuMatrix[1][2]==1){
+						menuMatrix[1][2]=0;
+						menuMatrix[1][1]=1;
+						activeBackground(2,1);
+						console.log(menuMatrix);
+					}else if(menuMatrix[1][1]==1){
+						menuMatrix[1][1]=0;
+						menuMatrix[1][0]=1;
+						activeBackground(2,0);
+						console.log(menuMatrix);
+					}else if(menuMatrix[1][0]==1){
+						menuMatrix[1][0]=0;
+						menuMatrix[0][4]=1;
+						activeBackground(1,5);
+						console.log(menuMatrix);
+					}else if(menuMatrix[0][4]==1){
+						menuMatrix[0][4]=0;
+						menuMatrix[0][3]=1;
+						activeBackground(1,3);
+						console.log(menuMatrix);
+					}else if(menuMatrix[0][3]==1){
+						menuMatrix[0][3]=0;
+						menuMatrix[0][2]=1;
+						activeBackground(1,2);
+						console.log(menuMatrix);
+					}else if(menuMatrix[0][2]==1){
+						menuMatrix[0][2]=0;
+						menuMatrix[0][1]=1;
+						activeBackground(1,1);
+						console.log(menuMatrix);
+					}
 					
-					
-					
+					readMenu();
 
 				}
 				
 				function SwipeRight(){
+				
+				
+					
 				
 					if(menuMatrix[0][0]==1){
 						menuMatrix[0][0]=0;
@@ -405,11 +544,25 @@
 						menuMatrix[1][3]=1;
 						activeBackground(2,4);
 						console.log(menuMatrix);
+					}else if(menuMatrix[1][3]==1){
+						menuMatrix[1][3]=0;
+						menuMatrix[1][4]=1;
+						activeBackground(2,5);
+						console.log(menuMatrix);
 					}
+					
+					
+					readMenu();
 					
 				}
 			 
-			 
+				
+				
+				function swipeUp(){
+				
+					alert("Swipe up");
+				
+				}
 			 
 			 
 				var myVar;
@@ -456,7 +609,7 @@
 							else{
 								if(HistoryArray[HistoryArray.length-2].q21=="green" && HistoryArray[HistoryArray.length-2].q22=="green" ){
 									if(HistoryArray[HistoryArray.length-1].q11=="green" && HistoryArray[HistoryArray.length-1].q12=="green" )	
-										alert("Swipe up");
+										swipeUp();
 								}
 								else{
 									if(HistoryArray[HistoryArray.length-2].q11=="green" && HistoryArray[HistoryArray.length-2].q12=="green" ){
@@ -491,41 +644,7 @@
 			 
 			 
 			 
-			
-			<script>
-			
-				var recognition = new webkitSpeechRecognition();
-				recognition.continuous = true;
-				reset();
-				recognition.onend = reset();
-				toggleStartStop();
-				
-				recognition.onresult = function (event) {
-				  for (var i = event.resultIndex; i < event.results.length; ++i) {
-					if (event.results[i].isFinal) {
-					  console.log(event.results[i][0].transcript);
-					}
-				  }
-				}
-
-				function reset() {
-				  recognizing = false;
-				 
-				}
-
-				function toggleStartStop() {
-				  if (recognizing) {
-					recognition.stop();
-					reset();
-				  } else {
-					recognition.start();
-					recognizing = true;
-					
-				  }
-				  console.log(recognizing);
-				}
-				
-			</script>
+		
 			
 			
 			
